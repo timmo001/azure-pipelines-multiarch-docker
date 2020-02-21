@@ -1,0 +1,19 @@
+---
+stages:
+  - stage: Manifest
+    displayName: multi-arch manifest
+    dependsOn: 
+      - amd64
+      - arm32v7
+      - arm64v8
+    variables:
+      - name: DOCKER
+        value: docker --config=/home/vsts/.docker
+    jobs:
+    - job: Manifest 
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+        - script: |
+            echo $(dockerPassword) | $(DOCKER) login --username $(dockerLogin) --password-stdin
+            make manifest
