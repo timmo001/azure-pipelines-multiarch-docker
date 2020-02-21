@@ -11,8 +11,8 @@ stages:
   - template: .azure-pipelines-job.yml 
     parameters:
       arch: amd64
-      username: $(DOCKER_USERNAME)
-      password: $(DOCKER_PASSWORD)
+      username: $(dockerLogin)
+      password: $(dockerPassword)
 
 
 - stage: arm32v7
@@ -22,8 +22,8 @@ stages:
   - template: .azure-pipelines-job.yml
     parameters:
       arch: arm32v7
-      username: $(DOCKER_USERNAME)
-      password: $(DOCKER_PASSWORD)
+      username: $(dockerLogin)
+      password: $(dockerPassword)
 
 
 - stage: arm64v8
@@ -33,8 +33,8 @@ stages:
   - template: .azure-pipelines-job.yml
     parameters:
       arch: arm64v8
-      username: $(DOCKER_USERNAME)
-      password: $(DOCKER_PASSWORD)
+      username: $(dockerLogin)
+      password: $(dockerPassword)
 
 
 - stage: Manifest
@@ -52,5 +52,5 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
         - script: |
-            echo $(DOCKER_PASSWORD) | $(DOCKER) login --username $(DOCKER_USERNAME) --password-stdin
+            echo $(dockerPassword) | $(DOCKER) login --username $(dockerLogin) --password-stdin
             make manifest
