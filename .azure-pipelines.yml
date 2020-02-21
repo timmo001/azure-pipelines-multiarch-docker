@@ -1,8 +1,4 @@
-# https://aka.ms/yaml
-
-trigger:
-- master
-
+---
 stages:
   - stage: amd64
     displayName: amd64 (Intel/AMD)
