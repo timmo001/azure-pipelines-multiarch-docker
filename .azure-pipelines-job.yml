@@ -1,8 +1,9 @@
-  parameters:
-    vmImage: 'ubuntu-latest'
-    timeout: 60
+---
+parameters:
+  vmImage: 'ubuntu-latest'
+  timeout: 60
  
-  jobs:
+jobs:
   - job: ${{ parameters.arch }}
     displayName: Build ${{ parameters.arch }}
     timeoutInMinutes: ${{ parameters.timeout }}
