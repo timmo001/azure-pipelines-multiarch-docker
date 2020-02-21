@@ -18,7 +18,7 @@ jobs:
           make wrap-$(ARCH)
         displayName: Setup ${{ parameters.arch }}
       - script: |
-          make build-$(ARCH)
+          BASE=${{ parameters.base }} make build-$(ARCH)
         displayName: Build ${{ parameters.arch }}
       - script: |
           echo ${{ parameters.password }} | $(DOCKER) login --username ${{ parameters.username }} --password-stdin
