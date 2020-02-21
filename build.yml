@@ -4,19 +4,10 @@ steps:
       make qemu
       make wrap-$(ARCH)
     displayName: Setup ${{ parameters.arch }}
-    variables:
-      ARCH: ${{ parameters.arch }} 
-      DOCKER: docker --config=~/.docker
   - script: |
       BASE=${{ parameters.base }} make build-$(ARCH)
     displayName: Build ${{ parameters.arch }}
-    variables:
-      ARCH: ${{ parameters.arch }} 
-      DOCKER: docker --config=~/.docker
   - script: |
       echo ${{ parameters.password }} | $(DOCKER) login --username ${{ parameters.username }} --password-stdin
       make push-$(ARCH)
     displayName: Push ${{ parameters.arch }}
-    variables:
-      ARCH: ${{ parameters.arch }} 
-      DOCKER: docker --config=~/.docker
