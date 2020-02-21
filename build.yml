@@ -2,12 +2,12 @@
 steps:
   - script: |
       make qemu
-      make wrap-$(ARCH)
+      make wrap-${{ parameters.arch }}
     displayName: Setup ${{ parameters.arch }}
   - script: |
-      BASE=${{ parameters.base }} make build-$(ARCH)
+      BASE=${{ parameters.base }} make build-${{ parameters.arch }}
     displayName: Build ${{ parameters.arch }}
   - script: |
       echo ${{ parameters.password }} | $(DOCKER) login --username ${{ parameters.username }} --password-stdin
-      make push-$(ARCH)
+      make push-${{ parameters.arch }}
     displayName: Push ${{ parameters.arch }}
