@@ -1,20 +1,26 @@
 ---
-steps:
-  - template: .azure-pipelines-job.yml
-    displayName: 'amd64 (Intel/AMD)'
-    parameters:
-      arch: amd64
-      username: $(dockerLogin)
-      password: $(dockerPassword)
-  - template: .azure-pipelines-job.yml
-    displayName: 'arm32v7 (Pi 2+ and other armhf)'
-    parameters:
-      arch: arm32v7
-      username: $(dockerLogin)
-      password: $(dockerPassword)
-  - template: .azure-pipelines-job.yml
-    displayName: 'arm64v8 (Pi 3+ and other ARM64)'
-    parameters:
-      arch: arm64v8
-      username: $(dockerLogin)
-      password: $(dockerPassword)
+parameters:
+  vmImage: 'ubuntu-latest'
+  timeout: 60
+ 
+jobs:
+  - job: ${{ parameters.arch }}
+    displayName: Build ${{ parameters.arch }}
+    timeoutInMinutes: ${{ parameters.timeout }}
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+    variables:
+      ARCH: ${{ parameters.arch }} 
+      DOCKER: docker --config=~/.docker
+    steps:
+        - script: |
+            make qemu
+            make wrap-$(ARCH)
+          displayName: Setup ${{ parameters.arch }}
+        - script: |
+            make build-$(ARCH)
+          displayName: Build ${{ parameters.arch }}
+        - script: |
+            echo ${{ parameters.password }} | $(DOCKER) login --username ${{ parameters.username }} --password-stdin
+            make push-$(ARCH)
+          displayName: Push ${{ parameters.arch }}
