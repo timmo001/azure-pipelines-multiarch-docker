@@ -68,12 +68,15 @@ build:
 
 build-%:
 	$(eval ARCH := $*)
-	@echo "--> Building $(ARCH)"
+	@echo "--> Building $(ARCH) with $(BASE)"
 	$(DOCKER) build --build-arg BUILD_DATE=$(BUILD_DATE) \
 		--build-arg ARCH=$(ARCH) \
 		--build-arg BASE=$(BUILD_IMAGE_NAME):$(ARCH) \
 		--build-arg VCS_REF=$(VCS_REF) \
 		--build-arg VCS_URL=$(VCS_URL) \
+		--build-arg "BUILD_ARCH=${ARCH}" \
+		--build-arg "BUILD_FROM=${BASE}" \
+		--build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
 		-t $(IMAGE_NAME):$(ARCH) src
 	@echo "--> Done building $(ARCH)"
 
