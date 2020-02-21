@@ -1,10 +1,10 @@
 export IMAGE_NAME?=rcarmo/sample-multiarch-zsh
 export VCS_REF=`git rev-parse --short HEAD`
 export VCS_URL=https://github.com/rcarmo/azure-pipelines-multiarch-docker
-export BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
+export BUILD_DATE=`date +"%Y-%m-%dT%H:%M:%SZ`
 export TAG_DATE=`date -u +"%Y%m%d"`
 export UBUNTU_VERSION=ubuntu:18.04
-export QEMU_VERSION=4.0.0-2
+export QEMU_VERSION=v4.2.0-4
 export BUILD_IMAGE_NAME=local/ubuntu-base
 export TARGET_ARCHITECTURES=amd64 arm64v8 arm32v7 arm32v6
 export QEMU_ARCHITECTURES=arm aarch64
@@ -76,7 +76,7 @@ build-%:
 		--build-arg VCS_URL=$(VCS_URL) \
 		--build-arg "BUILD_ARCH=${ARCH}" \
 		--build-arg "BUILD_FROM=${BASE}" \
-		--build-arg "BUILD_DATE=$(date +"%Y-%m-%dT%H:%M:%SZ")" \
+		--build-arg "BUILD_DATE=$(BUILD_DATE) \
 		-t $(IMAGE_NAME):$(ARCH) src
 	@echo "--> Done building $(ARCH)"
 
