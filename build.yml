@@ -1,31 +1,20 @@
 ---
 steps:
-  - stage: amd64
-    displayName: amd64 (Intel/AMD)
-    dependsOn: [] 
-    jobs:
-      - template: .azure-pipelines-job.yml 
-        parameters:
-          arch: amd64
-          username: $(dockerLogin)
-          password: $(dockerPassword)
-
-  - stage: arm32v7
-    displayName: arm32v7 (Pi 2+ and other armhf)
-    dependsOn: []
-    jobs:
-      - template: .azure-pipelines-job.yml
-        parameters:
-          arch: arm32v7
-          username: $(dockerLogin)
-          password: $(dockerPassword)
-
-  - stage: arm64v8
-    displayName: arm64v8 (Pi 3+ and other ARM64)
-    dependsOn: []
-    jobs:
-      - template: .azure-pipelines-job.yml
-        parameters:
-          arch: arm64v8
-          username: $(dockerLogin)
-          password: $(dockerPassword)
+  - template: .azure-pipelines-job.yml
+    displayName: 'amd64 (Intel/AMD)'
+    parameters:
+      arch: amd64
+      username: $(dockerLogin)
+      password: $(dockerPassword)
+  - template: .azure-pipelines-job.yml
+    displayName: 'arm32v7 (Pi 2+ and other armhf)'
+    parameters:
+      arch: arm32v7
+      username: $(dockerLogin)
+      password: $(dockerPassword)
+  - template: .azure-pipelines-job.yml
+    displayName: 'arm64v8 (Pi 3+ and other ARM64)'
+    parameters:
+      arch: arm64v8
+      username: $(dockerLogin)
+      password: $(dockerPassword)
