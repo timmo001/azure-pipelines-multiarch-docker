@@ -4,7 +4,7 @@ steps:
       make qemu
       make wrap-$(ARCH)
     displayName: Setup ${{ parameters.arch }}
-   variables:
+    variables:
       ARCH: ${{ parameters.arch }} 
       DOCKER: docker --config=~/.docker
   - script: |
