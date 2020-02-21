@@ -13,14 +13,14 @@ jobs:
       ARCH: ${{ parameters.arch }} 
       DOCKER: docker --config=~/.docker
     steps:
-        - script: |
-            make qemu
-            make wrap-$(ARCH)
-          displayName: Setup ${{ parameters.arch }}
-        - script: |
-            make build-$(ARCH)
-          displayName: Build ${{ parameters.arch }}
-        - script: |
-            echo ${{ parameters.password }} | $(DOCKER) login --username ${{ parameters.username }} --password-stdin
-            make push-$(ARCH)
-          displayName: Push ${{ parameters.arch }}
+      - script: |
+          make qemu
+          make wrap-$(ARCH)
+        displayName: Setup ${{ parameters.arch }}
+      - script: |
+          make build-$(ARCH)
+        displayName: Build ${{ parameters.arch }}
+      - script: |
+          echo ${{ parameters.password }} | $(DOCKER) login --username ${{ parameters.username }} --password-stdin
+          make push-$(ARCH)
+        displayName: Push ${{ parameters.arch }}
